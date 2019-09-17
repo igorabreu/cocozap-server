@@ -13,7 +13,8 @@ import {
   newNotifiation,
   getSingleNotification,
   updateNotification,
-  deleteNotification
+  deleteNotification,
+  updateNotificationWithImage
 } from "../controllers/notificationsController"
 import { auth } from "../controllers/authenticationController"
 import multer from "multer"
@@ -56,8 +57,8 @@ router.route("/notifications/pagination").get(getNotificationsWithPagination)
 router
   .route("/notifications/:notification_id")
   .get(getSingleNotification)
+  .put(upload.single("image"), updateNotificationWithImage)
   .patch(updateNotification)
-  .put(updateNotification)
   .delete(deleteNotification)
 
 //Authentication

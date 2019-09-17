@@ -70,7 +70,48 @@ export const updateNotification = (req, res) => {
   Notification.findById(req.params.notification_id, function(err, notification) {
     if (err) res.send(err)
     const { body } = req
-    notification = Object.assign({}, body)
+
+    //TODO improve for something like Object.assing({}, notification, body)
+    notification.date = body.date
+    notification.picture = body.picture
+    notification.description = body.description
+    notification.category = body.category
+    notification.frequency = body.frequency
+    notification.address = body.address
+    notification.location = body.location
+    notification.lat = body.lat
+    notification.long = body.long
+    notification.triedToSolve = body.triedToSolve
+    notification.externalHelp = body.externalHelp
+
+    notification.save(function(err) {
+      if (err) res.json(err)
+      res.json({
+        data: notification
+      })
+    })
+  })
+}
+
+export const updateNotificationWithImage = (req, res) => {
+  Notification.findById(req.params.notification_id, function(err, notification) {
+    if (err) res.send(err)
+    const { body } = req
+
+    //TODO improve for something like Object.assing({}, notification, body)
+    notification.date = body.date
+    notification.picture = body.picture
+    notification.description = body.description
+    notification.category = body.category
+    notification.frequency = body.frequency
+    notification.address = body.address
+    notification.location = body.location
+    notification.lat = body.lat
+    notification.long = body.long
+    notification.triedToSolve = body.triedToSolve
+    notification.externalHelp = body.externalHelp
+    notification.picture = `${process.env.URL}${req.file.path.replace('uploads', '')}`
+
     notification.save(function(err) {
       if (err) res.json(err)
       res.json({
