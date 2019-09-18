@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose"
 
 const userSchema = Schema({
   date: {
-    type: Date,
+    type: Number,
     required: true,
   },
   picture: {
@@ -11,7 +11,7 @@ const userSchema = Schema({
   },
   description: {
     type: String,
-    required: true,
+    default: "",
   },
   category: {
     type: String,

@@ -50,8 +50,7 @@ export const getUsersWithPagination = (req, res) => {
 export const newUser = (req, res) => {
   var user = new User()
   bcrypt.hash(req.body.password, 5, (err, bcryptedPassword) => {
-    user.name = req.body.name
-    user.email = req.body.email
+    user.username = req.body.username
     user.password = bcryptedPassword
     user.save(err => {
       res.json({
@@ -74,9 +73,8 @@ export const updateUser = (req, res) => {
   User.findById(req.params.user_id, function(err, user) {
     if (err) res.send(err)
 
-    user.name = req.body.name
-    user.email = req.body.email
-
+    user.username = req.body.username
+    
     user.save(function(err) {
       if (err) res.json(err)
       res.json({

@@ -1,9 +1,9 @@
-import { find } from "../models/userModel"
+import User from "../models/userModel"
 import { compare } from "bcrypt"
 
 export function auth(req, res) {
-  const { email, password } = req.body
-  find({ email: email }, (err, user) => {
+  const { username, password } = req.body
+  User.find({ username: username }, (err, user) => {
     if (err) res.send(err)
     compare(password, user[0].password, (err, doesMatch) => {
       res.json({

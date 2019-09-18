@@ -1,4 +1,5 @@
 import Notification from "../models/notificationModel"
+import oldItems from "../../temp/batchItems"
 
 export const getNotifications = (req, res) => {
   Notification.find({}, (err, data) => {
@@ -46,7 +47,7 @@ export const getNotificationsWithPagination = (req, res) => {
   })
 }
 
-export const newNotifiation = (req, res, next) => {
+export const newNotification = (req, res, next) => {
   const { body } = req
   let notification = new Notification(Object.assign({}, body))
   notification.picture = `${process.env.URL}${req.file.path.replace('uploads', '')}`
@@ -54,6 +55,14 @@ export const newNotifiation = (req, res, next) => {
     res.json({
       notification
     })
+  })
+}
+
+export const newNotificationsBatch = (req, res) => {
+  oldItems.map(item => {
+    let notification = new Notification(Object.assign({}, item))
+    console.log(notification)
+    return notification.save()
   })
 }
 

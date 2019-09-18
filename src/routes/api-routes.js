@@ -10,11 +10,12 @@ import {
 import {
   getNotifications,
   getNotificationsWithPagination,
-  newNotifiation,
+  newNotification,
   getSingleNotification,
   updateNotification,
   deleteNotification,
-  updateNotificationWithImage
+  updateNotificationWithImage,
+  newNotificationsBatch
 } from "../controllers/notificationsController"
 import { auth } from "../controllers/authenticationController"
 import multer from "multer"
@@ -50,9 +51,13 @@ router
 router
   .route("/notifications")
   .get(getNotifications)
-  .post(upload.single("image"), newNotifiation)
+  .post(upload.single("image"), newNotification)
 
-router.route("/notifications/pagination").get(getNotificationsWithPagination)
+router
+  .route("/notifications/batch")
+  .post(newNotificationsBatch)
+
+router.route("/notifications/pagination").post(getNotificationsWithPagination)
 
 router
   .route("/notifications/:notification_id")
@@ -62,6 +67,6 @@ router
   .delete(deleteNotification)
 
 //Authentication
-router.route("/login").post(auth)
+router.route("/auth").post(auth)
 
 export default router
