@@ -4,7 +4,8 @@
   "description": "Cocozap Server",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js"
+    "start": "nodemon --exec babel-node src/index.js",
+    "production": "pm2 start index.js --name cocozap-api"
   },
   "repository": {
     "type": "git"
