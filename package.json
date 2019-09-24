@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
-    "production": "pm2 start index.js --name cocozap-api"
+    "production": "pm2 start src/index.js --name cocozap-api"
   },
   "repository": {
     "type": "git"
