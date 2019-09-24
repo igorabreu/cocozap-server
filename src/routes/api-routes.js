@@ -51,7 +51,7 @@ router
 router
   .route("/notifications")
   .get(getNotifications)
-  .post(upload.single("image"), newNotification)
+  .post(upload.single("picture"), newNotification)
 
 router
   .route("/notifications/batch")
@@ -62,7 +62,7 @@ router.route("/notifications/pagination").post(getNotificationsWithPagination)
 router
   .route("/notifications/:notification_id")
   .get(getSingleNotification)
-  .put(upload.single("image"), updateNotificationWithImage)
+  .put(upload.single("picture"), updateNotificationWithImage)
   .patch(updateNotification)
   .delete(deleteNotification)
 

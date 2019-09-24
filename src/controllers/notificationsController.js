@@ -40,7 +40,7 @@ export const getNotificationsWithPagination = (req, res) => {
         response = { error: true, message: "Error fetching data" }
       } else {
         const totalPages = Math.ceil(totalCount / size)
-        response = { error: false, message: data, pages: totalPages }
+        response = { error: false, message: data, pages: totalPages, totalItems: totalCount }
       }
       res.json(response)
     })
@@ -61,7 +61,6 @@ export const newNotification = (req, res, next) => {
 export const newNotificationsBatch = (req, res) => {
   oldItems.map(item => {
     let notification = new Notification(Object.assign({}, item))
-    console.log(notification)
     return notification.save()
   })
 }
