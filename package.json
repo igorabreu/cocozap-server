@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
-    "production": "sudo pm2 start npm -- start"
+    "production": "sudo pm2 start npm -- start --cwd"
   },
   "repository": {
     "type": "git"
