@@ -2,6 +2,7 @@ import Notification from "../models/notificationModel"
 import oldItems from "../../temp/batchItems"
 
 export const getNotifications = (req, res) => {
+  let response
   Notification.find({}, (err, data) => {
     if (err) {
       response = { error: true, message: "Error fetching data" }
