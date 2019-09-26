@@ -1,5 +1,4 @@
 node_modules/
-uploads/images/*
 yarn.lock
 package-lock.json
 .env

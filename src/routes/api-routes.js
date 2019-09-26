@@ -23,7 +23,7 @@ import multer from "multer"
 //multer config
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, "/var/www/html/cocozap-server/uploads/images")
+    callback(null, "uploads/images")
   },
   filename: (req, file, callback) => {
     callback(null, Date.now() + file.originalname)
