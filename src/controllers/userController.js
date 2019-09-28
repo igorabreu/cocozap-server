@@ -1,7 +1,11 @@
 import bcrypt from "bcrypt"
 import User from "../models/userModel"
+import checkAPIKey from "../utils/checkAPIKey"
 
 export const getUsers = (req, res) => {
+  if (!checkAPIKey(req.headers.api_key, process.env.API_KEY)) {
+    return res.send(401)
+  }
   User.find({}, (err, data) => {
     if (err) {
       response = { error: true, message: "Error fetching data" }
@@ -13,6 +17,9 @@ export const getUsers = (req, res) => {
 }
 
 export const getUsersWithPagination = (req, res) => {
+  if (!checkAPIKey(req.headers.api_key, process.env.API_KEY)) {
+    return res.send(401)
+  }
   const pageNumber = parseInt(req.body.pageNumber)
   const size = parseInt(req.body.size)
   const query = {}
@@ -48,6 +55,9 @@ export const getUsersWithPagination = (req, res) => {
 }
 
 export const newUser = (req, res) => {
+  if (!checkAPIKey(req.headers.api_key, process.env.API_KEY)) {
+    return res.send(401)
+  }
   var user = new User()
   bcrypt.hash(req.body.password, 5, (err, bcryptedPassword) => {
     user.username = req.body.username
@@ -61,6 +71,9 @@ export const newUser = (req, res) => {
 }
 
 export const getSingleUser = (req, res) => {
+  if (!checkAPIKey(req.headers.api_key, process.env.API_KEY)) {
+    return res.send(401)
+  }
   User.findById(req.params.user_id, (err, user) => {
     if (err) res.send(err)
     res.json({
@@ -70,6 +83,9 @@ export const getSingleUser = (req, res) => {
 }
 
 export const updateUser = (req, res) => {
+  if (!checkAPIKey(req.headers.api_key, process.env.API_KEY)) {
+    return res.send(401)
+  }
   User.findById(req.params.user_id, function(err, user) {
     if (err) res.send(err)
 
@@ -85,6 +101,9 @@ export const updateUser = (req, res) => {
 }
 
 export const deleteUser = (req, res) => {
+  if (!checkAPIKey(req.headers.api_key, process.env.API_KEY)) {
+    return res.send(401)
+  }
   User.remove(
     {
       _id: req.params.user_id

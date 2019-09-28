@@ -1,5 +1,6 @@
 import Notification from "../models/notificationModel"
 import oldItems from "../../temp/batchItems"
+import checkAPIKey from "../utils/checkAPIKey"
 
 export const getNotifications = (req, res) => {
   let response
@@ -14,6 +15,11 @@ export const getNotifications = (req, res) => {
 }
 
 export const getNotificationsWithPagination = (req, res) => {
+
+  if (!checkAPIKey(req.headers.api_key, process.env.API_KEY)) {
+    return res.send(401)
+  }
+
   const pageNumber = parseInt(req.body.pageNumber)
   const size = parseInt(req.body.size)
   const query = {}
@@ -49,6 +55,9 @@ export const getNotificationsWithPagination = (req, res) => {
 }
 
 export const newNotification = (req, res, next) => {
+  if (!checkAPIKey(req.headers.api_key, process.env.API_KEY)) {
+    return res.send(401)
+  }
   const { body } = req
   let notification = new Notification(Object.assign({}, body))
   notification.picture = `${process.env.URL}${req.file.path.replace('uploads', '')}`
@@ -60,6 +69,9 @@ export const newNotification = (req, res, next) => {
 }
 
 export const newNotificationsBatch = (req, res) => {
+  if (!checkAPIKey(req.headers.api_key, process.env.API_KEY)) {
+    return res.send(401)
+  }
   oldItems.map(item => {
     let notification = new Notification(Object.assign({}, item))
     return notification.save()
@@ -67,6 +79,9 @@ export const newNotificationsBatch = (req, res) => {
 }
 
 export const getSingleNotification = (req, res) => {
+  if (!checkAPIKey(req.headers.api_key, process.env.API_KEY)) {
+    return res.send(401)
+  }
   Notification.findById(req.params.notification_id, (err, notification) => {
     if (err) res.send(err)
     res.json({
@@ -76,6 +91,9 @@ export const getSingleNotification = (req, res) => {
 }
 
 export const updateNotification = (req, res) => {
+  if (!checkAPIKey(req.headers.api_key, process.env.API_KEY)) {
+    return res.send(401)
+  }
   Notification.findById(req.params.notification_id, function(err, notification) {
     if (err) res.send(err)
     const { body } = req
@@ -103,10 +121,12 @@ export const updateNotification = (req, res) => {
 }
 
 export const updateNotificationWithImage = (req, res) => {
+  if (!checkAPIKey(req.headers.api_key, process.env.API_KEY)) {
+    return res.send(401)
+  }
   Notification.findById(req.params.notification_id, function(err, notification) {
     if (err) res.send(err)
     const { body } = req
-
     //TODO improve for something like Object.assing({}, notification, body)
     notification.date = body.date
     notification.picture = body.picture
@@ -131,6 +151,9 @@ export const updateNotificationWithImage = (req, res) => {
 }
 
 export const deleteNotification = (req, res) => {
+  if (!checkAPIKey(req.headers.api_key, process.env.API_KEY)) {
+    return res.send(401)
+  }
   Notification.remove(
     {
       _id: req.params.notification_id
