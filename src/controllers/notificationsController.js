@@ -37,7 +37,7 @@ export const getNotificationsWithPagination = (req, res) => {
   query.limit = size
 
   // Find some documents
-  Notification.countDocuments({}, (err, totalCount) => {
+  Notification.estimatedDocumentCount({}, (err, totalCount) => {
     if (err) {
       response = { error: true, message: "Error fetching data" }
     }
@@ -154,7 +154,7 @@ export const deleteNotification = (req, res) => {
   if (!checkAPIKey(req.headers.api_key, process.env.API_KEY)) {
     return res.send(401)
   }
-  Notification.remove(
+  Notification.deleteOne(
     {
       _id: req.params.notification_id
     },

@@ -37,7 +37,7 @@ export const getUsersWithPagination = (req, res) => {
   query.limit = size
 
   // Find some documents
-  User.countDocuments({}, (err, totalCount) => {
+  User.estimatedDocumentCount({}, (err, totalCount) => {
     if (err) {
       response = { error: true, message: "Error fetching data" }
     }
@@ -104,7 +104,7 @@ export const deleteUser = (req, res) => {
   if (!checkAPIKey(req.headers.api_key, process.env.API_KEY)) {
     return res.send(401)
   }
-  User.remove(
+  User.deleteOne(
     {
       _id: req.params.user_id
     },
