@@ -4,7 +4,7 @@ import { compare } from "bcrypt"
 export function auth(req, res) {
   const { username, password } = req.body
   User.find({ username: username }, (err, user) => {
-    if (user.length > 0) {
+    if (user && user.length > 0) {
       compare(password, user[0].password, (err, doesMatch) => {
         if (doesMatch) {
           res.json({
